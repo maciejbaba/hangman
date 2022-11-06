@@ -19,10 +19,10 @@ function App() {
     guessedLetters.includes(letter))
 
   const addGuessedLetter = useCallback((letter: string) => {
-    if (guessedLetters.includes(letter)) return
+    if (guessedLetters.includes(letter) || isLoser || isWinner) return
 
     setGuessedLetters(currentLetters => [...currentLetters, letter])
-  }, [guessedLetters])
+  }, [guessedLetters, isLoser, isWinner])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -61,10 +61,12 @@ function App() {
       <HangmanDrawing numberOfGuesses={incorrectLetters.length}/>
       <HangmanWord guessedLetters={guessedLetters} wordToGuess={wordToGuess}/>
       <div style={{ alignSelf: "stretch"}}>
-        <Keyboard activeLetters={guessedLetters.filter(letter =>
-           wordToGuess.includes(letter))}
-           inactiveLetters={incorrectLetters}
-           addGuessedLetter={addGuessedLetter}
+        <Keyboard
+          disabled={isWinner || isLoser} 
+          activeLetters={guessedLetters.filter(letter =>
+            wordToGuess.includes(letter))}
+          inactiveLetters={incorrectLetters}
+          addGuessedLetter={addGuessedLetter}
            />
       </div>
     </div>
