@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { HangmanDrawing } from "./HangmanDrawing"
+import BODY_PARTS from "./HangmanDrawing"
 import { HangmanWord } from "./HangmanWord"
 import { Keyboard } from "./Keyboard"
 import words from "./wordList.json"
@@ -12,6 +13,10 @@ function App() {
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 
   const incorrectLetters = guessedLetters.filter(letter => !wordToGuess.includes(letter))
+
+  const isLoser = incorrectLetters.length >= BODY_PARTS.length
+  const isWinner = wordToGuess.split("").every(letter => 
+    guessedLetters.includes(letter))
 
   const addGuessedLetter = useCallback((letter: string) => {
     if (guessedLetters.includes(letter)) return
@@ -49,7 +54,10 @@ function App() {
         alignItems: "center"
       }}
     >
-      <div style={{ fontSize: "2rem", textAlign: "center"}}> Lose Win </div>
+      <div style={{ fontSize: "2rem", textAlign: "center"}}>
+        {isWinner && "Winner! Refresh"}
+        {isLoser && "Loser! Refresh"} 
+      </div>
       <HangmanDrawing numberOfGuesses={incorrectLetters.length}/>
       <HangmanWord guessedLetters={guessedLetters} wordToGuess={wordToGuess}/>
       <div style={{ alignSelf: "stretch"}}>

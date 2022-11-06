@@ -26,6 +26,7 @@ export function Keyboard({activeLetters, inactiveLetters, addGuessedLetter}: Key
             ${isActive ? styles.active : ""}
             ${isInactive ? styles.inactive: ""}
           `}
+          disabled={isInactive || isActive}
           key={key}
         >
           {key}

@@ -75,6 +75,8 @@ const RIGHT_LEG = (
 
 const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, lEFT_ARM, RIGHT_LEG, lEFT_LEG]
 
+export default BODY_PARTS
+
 interface HangmanDrawingProps {
   numberOfGuesses: number
 }
